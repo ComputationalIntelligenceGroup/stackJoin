@@ -8,6 +8,10 @@ import ij.gui.GenericDialog;
 import ij.process.ImageProcessor;
 import ij.io.OpenDialog;
 import java.awt.Color;
+import java.io.IOException;
+
+import loci.formats.FormatException;
+import loci.formats.ImageReader;
 
 public class StackJoin_ implements PlugIn {
 
@@ -25,7 +29,17 @@ public class StackJoin_ implements PlugIn {
 		if (!showDialog()) {
 			return;
 		}
-
+		ImageReader r = new ImageReader();
+		 
+		try {
+			r.setId(this.filePathStart);
+		} catch (FormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ImagePlus tempImage = IJ.openImage(this.filePathStart);
 
 		if (tempImage == null) {
@@ -80,7 +94,7 @@ public class StackJoin_ implements PlugIn {
 		ImageStack tempStack = new ImageStack(newwidth, newlength);
 
 		for (int i = 1; i <= image.getDimensions()[3]; i++) {
-			tempStack.addSlice(image.getStack().getProcessor(i).resize(newwidth, newlength));
+			tempStack.addSlice(image.getStack().getProcessor(i).resize(newwidth, newlength,false));
 		}
 		ImagePlus img = new ImagePlus("reduced", tempStack);
 		return img;
@@ -218,8 +232,8 @@ public class StackJoin_ implements PlugIn {
 
 		GenericDialog gd = new GenericDialog("StackCombiner Plus");
 		gd.addMessage("The StackCombiner Plus plugin, will now merge various stack to form a bigger image.");
-		gd.addStringField("Prior Operations (or none)", "StackReg", 10);
-		gd.addStringField("Options", "transformation=[Rigid Body]", 20);
+		gd.addStringField("Prior Operations (or none)", "none", 10);
+		gd.addStringField("Options", "", 20);
 		gd.addStringField("Initial SLice: ", "1", 10);
 		gd.addStringField("Last slice: ", "1", 10);
 		gd.addNumericField("scale :", 1, 3);

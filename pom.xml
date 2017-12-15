@@ -14,7 +14,7 @@
 
 	<groupId>sc.fiji</groupId>
 	<artifactId>StackJoin_</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 
 	<name>plugins/StackJoin_.jar</name>
 	<description>StackJoin</description>
@@ -51,8 +51,29 @@
 			<groupId>net.imagej</groupId>
 			<artifactId>ij</artifactId>
 		</dependency>
+		<dependency>
+          <groupId>ome</groupId>
+          <artifactId>formats-gpl</artifactId>
+          <scope>compile</scope>
+     </dependency>
 	</dependencies>
-
+	 <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <id>unidata</id>
+      <name>Unidata Repository</name>
+      <url>http://artifacts.unidata.ucar.edu/content/repositories/unidata-releases</url>
+    </repository>
+    <repository>
+      <id>ome</id>
+      <name>OME Artifactory</name>
+      <url>http://artifacts.openmicroscopy.org/artifactory/maven/</url>
+    </repository>
+</repositories>
 	<build>
 		<plugins>
 			<plugin>
